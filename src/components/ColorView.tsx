@@ -42,9 +42,11 @@ const ColorView = ({}: Props) => {
 
   return (
     <Wrapper>
-      {data?.alsoOwns && data.alsoOwns.length > 0 && (
-        <UserRelated items={data.alsoOwns} />
-      )}
+      <div>
+        {data?.alsoOwns && data.alsoOwns.length > 0 && (
+          <UserRelated items={data.alsoOwns} />
+        )}
+      </div>
 
       <Inner>
         <h1>{hex}</h1>

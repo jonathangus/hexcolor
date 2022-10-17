@@ -20,7 +20,10 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const Hand = styled(motion.span)``;
+const Hand = styled(motion.div)`
+  position: relative;
+  display: inline-block;
+`;
 
 const variants = {
   hidden: {
@@ -62,7 +65,13 @@ const UserRelated = ({ items }: Props) => {
       </Rows>
       {completed && (
         <Pointer>
-          Same user also owns these badboys <Hand>👆</Hand>
+          Same user also owns these badboys
+          <Hand
+            animate={{ y: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+          >
+            👆
+          </Hand>
         </Pointer>
       )}
     </Wrapper>
