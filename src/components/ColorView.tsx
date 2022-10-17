@@ -39,12 +39,11 @@ const ColorView = ({}: Props) => {
   const { color, hex } = useColorContext();
   const { data, error } = useEnsStats(color);
   const name = getName(color);
-  const ens = useEnsName({
+  const { data: ensName } = useEnsName({
     address: data?.owner ? ethers.utils.getAddress(data.owner) : '0x',
     enabled: Boolean(data?.owner),
     chainId: chain.mainnet.id,
   });
-  console.log('ens', ens);
   return (
     <Wrapper>
       <div>
@@ -75,7 +74,7 @@ const ColorView = ({}: Props) => {
 
         {data?.owner && (
           <div>
-            {color}.eth is owned by: {data.ensName || data.owner}
+            {color}.eth is owned by: {ensName || data.ensName || data.owner}
           </div>
         )}
       </Inner>
