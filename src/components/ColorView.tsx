@@ -1,5 +1,6 @@
+import { ethers } from 'ethers';
 import styled from 'styled-components';
-import { useAccount } from 'wagmi';
+import { chain, useAccount, useEnsName } from 'wagmi';
 import { useColorContext } from '../context/ColorContext';
 import useEnsStats from '../hooks/useEnsStats';
 import { getName } from '../utils/extra';
@@ -38,8 +39,12 @@ const ColorView = ({}: Props) => {
   const { color, hex } = useColorContext();
   const { data, error } = useEnsStats(color);
   const name = getName(color);
-  const { address } = useAccount();
-
+  const ens = useEnsName({
+    address: data?.owner ? ethers.utils.getAddress(data.owner) : '0x',
+    enabled: Boolean(data?.owner),
+    chainId: chain.mainnet.id,
+  });
+  console.log('ens', ens);
   return (
     <Wrapper>
       <div>
