@@ -2,6 +2,7 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import Error from 'next/error';
 import { useRouter } from 'next/router';
 import ColorView from '../components/ColorView';
+import SEO from '../components/SEO';
 import { ColorContextProvider } from '../context/ColorContext';
 import { stringIsHex } from '../utils/regex';
 
@@ -27,6 +28,7 @@ const ColorPage = ({ color }: Props) => {
 
   return (
     <ColorContextProvider color={wantedColor}>
+      <SEO title={`${hex} - ${color}.eth`} image={`/api/og?color=${color}`} />
       <ColorView />
     </ColorContextProvider>
   );
