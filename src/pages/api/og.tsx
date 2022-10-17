@@ -24,6 +24,8 @@ export default async function handler(req: NextRequest) {
   const { searchParams } = req.nextUrl;
   const color = searchParams.get('color');
   const result = await getEns(color);
+
+  console.log(result);
   //   const token = searchParams.get('token');
 
   //   const verifyToken = toHex(

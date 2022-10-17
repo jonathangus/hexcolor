@@ -1,8 +1,6 @@
 import { ethers } from 'ethers';
 import { gql, GraphQLClient } from 'graphql-request';
 import { stringIsHex } from '../utils/regex';
-import { ENS } from '@ensdomains/ensjs';
-// import nodeFetch from 'node-fetch';
 
 const ensQuery = gql`
   query GetEns($name: String) {
@@ -38,13 +36,19 @@ export const getEns = async (color: string) => {
       `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`
     );
 
+    console.log(
+      `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`
+    );
+
     try {
       ensName = await provider.lookupAddress(
         ethers.utils.getAddress(match.owner.id)
       );
-    } catch (e) {}
+    } catch (e) {
+      console.log('!!');
+      console.error(e);
+    }
 
-    console.log(match.owner.domains);
     return {
       available: false,
       ensName,

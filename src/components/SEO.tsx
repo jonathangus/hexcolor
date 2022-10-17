@@ -30,7 +30,7 @@ const SEO: FC<Props> = ({
     if (image.startsWith('http')) {
       metaImage = image;
     } else if (image.startsWith('/')) {
-      metaImage = `https://${process.env.NEXT_PUBLIC_VERCEL_UR}${image}`;
+      metaImage = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}${image}`;
     } else {
       throw new Error('Image needs to be relative');
     }
