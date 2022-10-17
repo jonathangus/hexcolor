@@ -57,7 +57,7 @@ export default async function handler(req: NextRequest) {
         {result.available && <h1>{color}.eth is available!</h1>}
         {!result.available && (
           <h1>
-            {color}.eth is owned by {result.owner}!
+            {color}.eth is owned by {result.ensName || result.owner}!
           </h1>
         )}
       </div>

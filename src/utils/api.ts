@@ -38,20 +38,11 @@ export const getEns = async (color: string) => {
       `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`
     );
 
-    console.log('res-_--');
-    const a = await provider.resolveName(match.owner.id);
-    console.log(a);
-    // const ENSInstance = new ENS();
-    // await ENSInstance.setProvider(provider);
-    // const profile = await ENSInstance.getProfile(
-    //   ethers.utils.getAddress(match.owner.id)
-    // );
-    // console.log(a);
-
-    // if (provider) {
-    //   ensName = await provider.lookupAddress(match.owner.id);
-    //   console.log('ENS NAME', ensName);
-    // }
+    try {
+      ensName = await provider.lookupAddress(
+        ethers.utils.getAddress(match.owner.id)
+      );
+    } catch (e) {}
 
     console.log(match.owner.domains);
     return {
