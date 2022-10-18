@@ -12,3 +12,11 @@ export const getName = (color: string): string | void => {
     return match.name.replace(/([A-Z])/g, ' $1').trim();
   }
 };
+
+export const randomColor = (): string => {
+  const newColour = ((Math.random() * 0xffffff) << 0).toString(16);
+  if (newColour.length < 6) {
+    return randomColor();
+  }
+  return newColour;
+};

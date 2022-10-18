@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { randomColor } from '../utils/extra';
 
 type Props = {};
 
@@ -18,14 +19,6 @@ const Button = styled.button`
   cursor: pointer;
   outline: none;
 `;
-
-const randomColor = (): string => {
-  const newColour = ((Math.random() * 0xffffff) << 0).toString(16);
-  if (newColour.length < 6) {
-    return randomColor();
-  }
-  return newColour;
-};
 
 const Random = ({}: Props) => {
   const router = useRouter();
