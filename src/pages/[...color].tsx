@@ -1,25 +1,21 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Error from 'next/error';
-import { useRouter } from 'next/router';
 import ColorView from '../components/ColorView';
 import SEO from '../components/SEO';
 import { ColorContextProvider } from '../context/ColorContext';
+import useColorMatch from '../hooks/useColorMatch';
 import { stringIsHex } from '../utils/regex';
 
 type Props = {
   isEmptyPage?: boolean;
-  color?: {
-    hex: string;
-  };
+  color?: string;
 };
 
 const ColorPage = ({ color }: Props) => {
-  const router = useRouter();
-  const [wantedColor] = router?.query?.color || [];
-  const hex = `#${color}`;
+  const { hex, wantedColor } = useColorMatch(color);
 
+  console.log({ color, wantedColor, hex });
   if (!stringIsHex(hex)) {
-    return <div />;
     return <Error statusCode={404} />;
   }
 
