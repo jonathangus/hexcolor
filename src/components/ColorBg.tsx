@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router';
+import { type } from 'os';
 import { ReactNode } from 'react';
 import styled from 'styled-components';
+import useColorMatch from '../hooks/useColorMatch';
 import { pickTextColorBasedOnBgColorAdvanced } from '../utils/extra';
+import { stringIsHex } from '../utils/regex';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -13,23 +16,22 @@ const Wrapper = styled.div`
 type Props = { children: ReactNode };
 
 const ColorBg = ({ children }: Props) => {
-  const router = useRouter();
-  const [wantedColor] = router?.query?.color || [];
-  const hex = `#${wantedColor}`;
+  const { hex } = useColorMatch();
+
   return (
     <>
-      {wantedColor && (
+      {hex && (
         <style
           dangerouslySetInnerHTML={{
             __html: `
-         :root {
-          --bg-color: ${hex};
-          --text-color: ${pickTextColorBasedOnBgColorAdvanced(
-            hex,
-            '#ffffff',
-            '#000000'
-          )}
-        }
+              :root {
+                --bg-color: ${hex};
+                --text-color: ${pickTextColorBasedOnBgColorAdvanced(
+                  hex,
+                  '#ffffff',
+                  '#000000'
+                )}
+              }
       `,
           }}
         />

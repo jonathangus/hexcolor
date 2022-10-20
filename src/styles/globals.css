@@ -14,3 +14,6 @@ html, body, #__next {
   padding: 0;
 }
  
+a {
+  color: inherit
+}
