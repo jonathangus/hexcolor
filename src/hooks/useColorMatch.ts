@@ -6,24 +6,24 @@ const useColorMatch = (predefined?: string) => {
   let wantedColor;
   let hex;
 
-  if (!predefined) {
-    let [_wantedColor] = router?.query?.color || [];
-    if (_wantedColor) {
-      hex = `#${_wantedColor}`;
-    }
+  let [_wantedColor] = router?.query?.color || [];
+  if (_wantedColor) {
+    hex = `#${_wantedColor}`;
+  }
 
-    if (
-      !wantedColor &&
-      typeof window !== 'undefined' &&
-      process.env.NODE_ENV == 'production'
-    ) {
-      const match = '#' + window.location.pathname.replace('/', '');
-      if (stringIsHex(match)) {
-        hex = match;
-      }
+  if (
+    !wantedColor &&
+    typeof window !== 'undefined' &&
+    process.env.NODE_ENV == 'production'
+  ) {
+    const match = '#' + window.location.pathname.replace('/', '');
+    if (stringIsHex(match)) {
+      hex = match;
     }
-    wantedColor = _wantedColor;
-  } else {
+  }
+  wantedColor = _wantedColor;
+
+  if (predefined && !wantedColor) {
     wantedColor = predefined;
     hex = `#${predefined}`;
   }
