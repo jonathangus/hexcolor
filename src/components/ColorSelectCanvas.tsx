@@ -20,9 +20,9 @@ type Props = {};
 
 const ColorSelectCanvas = ({}: Props) => {
   const [color, setColor] = useState({ r: 255, g: 80, b: 255, a: 1 });
-  const [formats, setFormats] = useState<ColorFormats[]>(['rgba']);
+  const [formats, setFormats] = useState<any[]>(['rgba']);
   const [spectrum, setSpectrum] = useState<'hsla' | 'hsva'>('hsva');
-  const colorPickerRef = useRef<SetColor>();
+  const colorPickerRef = useRef<any>();
 
   const handleSpectrumClick = () => {
     setSpectrum(spectrum === 'hsva' ? 'hsla' : 'hsva');
@@ -51,6 +51,7 @@ const ColorSelectCanvas = ({}: Props) => {
     [formats]
   );
 
+  console.log(ColorPicker);
   return (
     <ColorPicker
       spectrum={spectrum}

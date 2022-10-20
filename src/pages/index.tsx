@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import styled from 'styled-components';
-import ColorSelectCanvas from '../components/ColorSelectCanvas';
 import Random from '../components/Random';
 
 const Wrapper = styled.div`
@@ -8,12 +7,18 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  background-color: #4158d0;
+  background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 46%,
+    #ffcc70 100%
+  );
 `;
 
 const Home: NextPage = () => {
   return (
     <Wrapper>
-      {/* <ColorSelectCanvas /> */}
       <Random />
     </Wrapper>
   );

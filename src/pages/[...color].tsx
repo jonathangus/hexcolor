@@ -14,7 +14,6 @@ type Props = {
 const ColorPage = ({ color }: Props) => {
   const { hex, wantedColor } = useColorMatch(color);
 
-  console.log({ color, wantedColor, hex });
   if (!stringIsHex(hex)) {
     return <Error statusCode={404} />;
   }
