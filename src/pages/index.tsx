@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 const Home: NextPage = () => {
   return (
     <Wrapper>
-      <ColorSelectCanvas />
+      {/* <ColorSelectCanvas /> */}
       <Random />
     </Wrapper>
   );

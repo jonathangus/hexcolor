@@ -4,6 +4,7 @@ import Web3Provider from '../components/Web3Provider';
 import ColorBg from '../components/ColorBg';
 import Header from '../components/Header';
 import QueryClientWrapper from '../providers/QueryClientWrapper';
+import { useRouter } from 'next/router';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

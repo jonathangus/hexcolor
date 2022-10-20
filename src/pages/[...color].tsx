@@ -18,11 +18,8 @@ const ColorPage = ({ color }: Props) => {
   const [wantedColor] = router?.query?.color || [];
   const hex = `#${color}`;
 
-  if (router.isFallback) {
-    return <div>loadin..</div>;
-  }
-
   if (!stringIsHex(hex)) {
+    return <div />;
     return <Error statusCode={404} />;
   }
 

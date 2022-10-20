@@ -1,6 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { randomColor } from '../utils/extra';
+import { randomColor, rgbToHex } from '../utils/extra';
+import dynamic from 'next/dynamic';
+
+const ColorPicker = dynamic(async () => {
+  const mod = await import('react-canvas-color-picker');
+  return mod.ColorPicker;
+});
 
 const Canvas = styled.canvas`
   position: absolute;
@@ -13,49 +19,48 @@ const Canvas = styled.canvas`
 type Props = {};
 
 const ColorSelectCanvas = ({}: Props) => {
-  const el = useRef<HTMLCanvasElement>();
-  useEffect(() => {
-    var canvas = el.current;
-    const { width, height } = canvas;
-    const context = canvas.getContext('2d');
-    const gradientH = context.createLinearGradient(0, 0, width, 0);
-    gradientH.addColorStop(0, 'rgb(255, 0, 0)'); // red
-    gradientH.addColorStop(1 / 6, 'rgb(255, 255, 0)'); // yellow
-    gradientH.addColorStop(2 / 6, 'rgb(0, 255, 0)'); // green
-    gradientH.addColorStop(3 / 6, 'rgb(0, 255, 255)');
-    gradientH.addColorStop(4 / 6, 'rgb(0, 0, 255)'); // blue
-    gradientH.addColorStop(5 / 6, 'rgb(255, 0, 255)');
-    gradientH.addColorStop(1, 'rgb(255, 0, 0)'); // red
-    context.fillStyle = gradientH;
-    context.fillRect(0, 0, width, height);
-    const gradientV = context.createLinearGradient(0, 0, 0, height);
-    gradientV.addColorStop(0, 'rgba(255, 255, 255, 1)'); // white
-    gradientV.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
-    gradientV.addColorStop(0.5, 'rgba(0, 0, 0, 0)'); // transparent
-    gradientV.addColorStop(1, 'rgba(0, 0, 0, 1)'); // black
-    context.fillStyle = gradientV;
-    context.fillRect(0, 0, width, height);
+  const [color, setColor] = useState({ r: 255, g: 80, b: 255, a: 1 });
+  const [formats, setFormats] = useState<ColorFormats[]>(['rgba']);
+  const [spectrum, setSpectrum] = useState<'hsla' | 'hsva'>('hsva');
+  const colorPickerRef = useRef<SetColor>();
 
-    const onClick = (event) => {
-      const rect = event.target.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      const ctx = el.current.getContext('2d');
+  const handleSpectrumClick = () => {
+    setSpectrum(spectrum === 'hsva' ? 'hsla' : 'hsva');
+  };
 
-      console.log(event.target);
-      const imgData = ctx.getImageData(x, y, 1, 1);
-      const [r, g, b] = imgData.data;
-
-      console.log(r, g, b);
-    };
-
-    canvas.addEventListener('click', onClick);
-    return () => {
-      canvas.removeEventListener('click', onClick);
-    };
+  const handleChange = useCallback(({ colors }) => {
+    console.log(colors);
+    setColor({ ...colors.rgba });
   }, []);
 
-  return <Canvas ref={el} />;
+  const handleFormatChange = useCallback(
+    (event: any) => {
+      const { name } = event.target;
+      const index = formats.indexOf(name);
+      const isChecked = index !== -1;
+
+      let newFormats = [...formats];
+
+      if (isChecked) {
+        newFormats.splice(index, 1);
+      } else {
+        newFormats.push(name);
+      }
+      setFormats(newFormats);
+    },
+    [formats]
+  );
+
+  return (
+    <ColorPicker
+      spectrum={spectrum}
+      formats={formats}
+      initialColor={color}
+      onPanStart={handleChange}
+      onPan={handleChange}
+      ref={colorPickerRef}
+    />
+  );
 };
 
 export default ColorSelectCanvas;
