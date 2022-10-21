@@ -29,8 +29,9 @@ const MatosFooter = styled.div`
 const UpvoteWrap = styled.div`
   position: fixed;
   bottom: 12px;
-  right: 12px;
   color: white;
+  left: 50%;
+  transform: translateX(-50);
 `;
 
 type Props = {};
