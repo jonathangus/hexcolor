@@ -1,4 +1,4 @@
-import colors from './colors.json';
+import colors from '../config/colors.json';
 
 export const colorIsSpecial = (str: string): boolean =>
   colors.some((color) => color.hex === str);
@@ -12,6 +12,8 @@ export const getName = (color: string): string | void => {
     return match.name.replace(/([A-Z])/g, ' $1').trim();
   }
 };
+
+export const getTopNames = () => {};
 
 export const randomColor = (): string => {
   const newColour = ((Math.random() * 0xffffff) << 0).toString(16);

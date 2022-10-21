@@ -56,7 +56,7 @@ const ColorView = ({}: Props) => {
         <h1>{hex}</h1>
         {name && (
           <div>
-            ✨✨✨ sweet you got one of the 145{' '}
+            ✨✨✨ sweet! this is one of the 145{' '}
             <a href="https://www.colorabout.com/list/x11/">x11 colors</a> ✨✨✨
           </div>
         )}

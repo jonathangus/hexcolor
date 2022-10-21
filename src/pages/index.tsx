@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import styled from 'styled-components';
 import Random from '../components/Random';
+import TopList from '../components/TopList';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -20,6 +21,7 @@ const Home: NextPage = () => {
   return (
     <Wrapper>
       <Random />
+      <TopList />
     </Wrapper>
   );
 };

@@ -1,4 +1,4 @@
-import { useQuery } from 'wagmi';
+import { useQuery } from '@tanstack/react-query';
 import { getUserHoldings } from '../utils/api';
 
 const useUserHoldings = (address: string) => {
