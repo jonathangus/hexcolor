@@ -11,6 +11,8 @@ const Rows = styled(motion.div)`
   flex-wrap: wrap;
   height: 320px;
   overflow: hidden;
+  position: relative;
+  z-index: 100;
 `;
 
 const Pointer = styled(motion.div)`
