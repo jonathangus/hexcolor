@@ -2,17 +2,9 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import SimplexNoise from 'simplex-noise';
 
-import Blob from './Blob';
-
-// const simplex = new SimplexNoise(Math.random());
-
 const COLORS = ['bf211e', 'ffa69e', 'ffba08', '53dd6c', '031a6b'].map(
   (col) => `#${col}`
 );
-
-type Props = {
-  className: string;
-};
 
 type CircleProps = {
   i: number;
@@ -42,7 +34,7 @@ const Wrapper = styled.div`
     min-width: 100%;
   }
 `;
-const GradientMesh: React.FC<Props> = () => {
+const GradientMesh: React.FC = () => {
   return (
     <Wrapper>
       <svg viewBox="0 0 100 100" preserveAspectRatio="none">
