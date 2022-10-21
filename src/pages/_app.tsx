@@ -5,15 +5,24 @@ import ColorBg from '../components/ColorBg';
 import Header from '../components/Header';
 import QueryClientWrapper from '../providers/QueryClientWrapper';
 import { useRouter } from 'next/router';
+import NewRegistrations from '../components/NewRegistrations';
+import { ToastProvider } from 'react-toast-notifications';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Web3Provider>
       <QueryClientWrapper>
-        <Header />
-        <ColorBg>
-          <Component {...pageProps} />
-        </ColorBg>
+        <ToastProvider
+          autoDismiss
+          autoDismissTimeout={6000}
+          placement="bottom-right"
+        >
+          <Header />
+          <ColorBg>
+            <Component {...pageProps} />
+          </ColorBg>
+          <NewRegistrations />{' '}
+        </ToastProvider>
       </QueryClientWrapper>
     </Web3Provider>
   );

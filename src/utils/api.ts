@@ -107,3 +107,51 @@ export const getTopNames = async (): Promise<
     available: !result.domains.some((domain) => domain.labelName === color.hex),
   }));
 };
+
+const registrationQuery = gql`
+  query GetRegistrations($blockNr: Int) {
+    registrationEvents(
+      where: { blockNumber_gt: $blockNr }
+      orderDirection: desc
+      orderBy: blockNumber
+      first: 5
+    ) {
+      id
+      blockNumber
+      transactionID
+      __typename
+      registration {
+        id
+        domain {
+          labelName
+          name
+        }
+        registrationDate
+      }
+    }
+  }
+`;
+
+export const getRegistrations = async (
+  blockNr: number = 0
+): Promise<
+  {
+    name: string;
+    txId: string;
+    blockNr: number;
+  }[]
+> => {
+  console.log({ blockNr });
+  const result = await client.request<any>(registrationQuery, {
+    blockNr,
+  });
+
+  console.log({ result, blockNr });
+  return result.registrationEvents
+    .filter((event) => event.__typename === 'NameRegistered')
+    .map((event) => ({
+      name: event.registration.domain.name,
+      txId: event.transactionID,
+      blockNr: event.blockNumber,
+    }));
+};
