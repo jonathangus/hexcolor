@@ -5,7 +5,9 @@ import { getEns } from '../utils/api';
 import { stringIsHex } from '../utils/regex';
 
 const useEnsStats = (color: string) => {
-  const query = useQuery(['color', color], () => getEns(color));
+  const query = useQuery(['color', color], () => getEns(color), {
+    enabled: Boolean(color),
+  });
 
   return query;
 };

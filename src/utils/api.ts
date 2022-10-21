@@ -17,14 +17,14 @@ const ensQuery = gql`
   }
 `;
 
-export const getEns = async (color: string) => {
-  const client = new GraphQLClient(
-    'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
-    {
-      fetch: fetch,
-    }
-  );
+const client = new GraphQLClient(
+  'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
+  {
+    fetch: fetch,
+  }
+);
 
+export const getEns = async (color: string) => {
   const result = await client.request<any>(ensQuery, {
     name: `${color}.eth`.toLowerCase(),
   });
@@ -32,13 +32,9 @@ export const getEns = async (color: string) => {
   const [match] = result.domains;
   if (match) {
     let ensName;
-    const provider = new ethers.providers.JsonRpcProvider(
-      `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`
-    );
-
-    console.log(
-      `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`
-    );
+    // const provider = new ethers.providers.JsonRpcProvider(
+    //   `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`
+    // );
 
     // try {
     //   ensName = await provider.lookupAddress(
@@ -65,4 +61,23 @@ export const getEns = async (color: string) => {
   return {
     available: true,
   };
+};
+
+const holderQuery = gql`
+  query GetEnsHoldings($address: String) {
+    domains(where: { owner: $address }) {
+      labelName
+      name
+    }
+  }
+`;
+
+export const getUserHoldings = async (address: string): Promise<string[]> => {
+  const result = await client.request<any>(holderQuery, {
+    address: address.toLowerCase(),
+  });
+
+  return result.domains
+    .filter((domain) => stringIsHex('#' + domain.labelName))
+    .map((domain) => domain.labelName);
 };

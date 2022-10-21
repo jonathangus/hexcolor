@@ -6,7 +6,11 @@ import ColorCard from './ColorCard';
 const Rows = styled(motion.div)`
   display: flex;
   gap: 20px;
-  justify-content: center;
+  justify-content: flex-end;
+  grid-template-columns: repeat(3, 1fr);
+  flex-wrap: wrap;
+  height: 320px;
+  overflow: hidden;
 `;
 
 const Pointer = styled(motion.div)`
