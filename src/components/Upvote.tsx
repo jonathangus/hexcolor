@@ -14,17 +14,21 @@ const Upvote = ({ color }: Props) => {
     return data.count;
   });
 
-  const { mutateAsync } = useMutation(
-    async (vars: { message: string; signature: string }) => {
-      const { message, signature } = vars;
-      const { data } = await axios.post('/api/count', {
-        message,
-        signature,
-        color,
-      });
-      queryClient.setQueryData(['count', color], data.count);
-    }
-  );
+  const { mutateAsync, isLoading } = useMutation(async () => {
+    const message = await createSiweMessage(
+      address,
+      `I love the beautiful color #${color}`
+    );
+
+    const signature = await signer.signMessage(message);
+    const { data } = await axios.post('/api/count', {
+      message,
+      signature,
+      color,
+    });
+
+    queryClient.setQueryData(['count', color], data.count);
+  });
 
   async function createSiweMessage(address, statement) {
     const res = await axios.get('/api/nonce');
@@ -40,22 +44,12 @@ const Upvote = ({ color }: Props) => {
     return message.prepareMessage();
   }
 
-  const sign = async () => {
-    try {
-      const message = await createSiweMessage(
-        address,
-        `I love the beautiful color #${color}`
-      );
-
-      const signature = await signer.signMessage(message);
-      await mutateAsync({ message, signature });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  if (isLoading) {
+    return <div>....</div>;
+  }
 
   return (
-    <div onClick={sign}>
+    <div onClick={() => mutateAsync()}>
       Count: {colorCount} {'Upvote❤️'}
     </div>
   );
