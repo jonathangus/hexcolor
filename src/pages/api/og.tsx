@@ -1,6 +1,7 @@
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
 import { getEns } from '../../utils/api';
+import axios from 'axios';
 
 export const config = {
   runtime: 'experimental-edge',
@@ -24,8 +25,29 @@ export default async function handler(req: NextRequest) {
   const { searchParams } = req.nextUrl;
   const color = searchParams.get('color');
   const result = await getEns(color);
-
-  console.log(result);
+  let ensName;
+  if (result?.owner) {
+    try {
+      console.log(
+        result.owner,
+        'get moralis',
+        `https://deep-index.moralis.io/api/v2/resolve/${result.owner}/reverse`,
+        process.env.MORALIS
+      );
+      let res = await fetch(
+        `https://deep-index.moralis.io/api/v2/resolve/${result.owner}/reverse`,
+        {
+          headers: {
+            ['X-API-KEY']: process.env.MORALIS,
+          },
+        }
+      );
+      const { name } = await res.json();
+      ensName = name;
+    } catch (e) {
+      console.error('ERR:::', e);
+    }
+  }
   //   const token = searchParams.get('token');
 
   //   const verifyToken = toHex(
@@ -59,7 +81,7 @@ export default async function handler(req: NextRequest) {
         {result.available && <h1>{color}.eth is available!</h1>}
         {!result.available && (
           <h1>
-            {color}.eth is owned by {result.ensName || result.owner}!
+            {color}.eth is owned by {ensName || result.owner}!
           </h1>
         )}
       </div>
