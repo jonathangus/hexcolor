@@ -50,7 +50,7 @@ const Upvote = ({ color }: Props) => {
 
   return (
     <div onClick={() => mutateAsync()}>
-      Count: {colorCount} {'Upvote❤️'}
+      {colorCount || 0} {'upvotes ❤️'}
     </div>
   );
 };

@@ -8,16 +8,29 @@ const Button = styled.button`
   position: relative;
   display: block;
   margin: 0 auto;
-  width: 140px;
-  height: 30px;
+  width: 240px;
+  height: 60px;
   border-radius: 30px;
   background: #fff;
-  color: #e63c44;
+  color: black;
   border: none;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 20px;
   cursor: pointer;
   outline: none;
+  mix-blend-mode: screen;
+
+  &:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: white;
+    border-radius: 0.3em;
+    content: '';
+    mix-blend-mode: color-burn;
+  }
 `;
 
 const Random = ({}: Props) => {

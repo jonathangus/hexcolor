@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   position: absolute;
   bottom: 12px;
   left: 12px;
+  z-index: 3;
 `;
 const Item = styled.div`
   display: flex;
