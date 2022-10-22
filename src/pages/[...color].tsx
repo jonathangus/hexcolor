@@ -23,12 +23,14 @@ const ColorPage = ({ color, mounted }: Props) => {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-               const match = '#' + window.location.pathname.replace('/', '');
+               const base = window.location.pathname.replace('/', '');
+               const match = '#' + base;
                let hex;
               if (match.match(/^#([A-F0-9]{3}|[A-F0-9]{6})$/i)) {
                 hex = match;
                 console.log("HEJ MATCH", hex, document.getElementById("color-title"))
                 document.getElementById("color-title").innerHTML = hex;
+                document.title = match + " - " + base + ".eth";
               }
              `,
           }}
