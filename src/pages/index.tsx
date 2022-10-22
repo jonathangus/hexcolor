@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 
 const Inner = styled.div`
   position: relative;
-  z-index: 2;
+  z-index: 12;
 `;
 
 const Home: NextPage = () => {

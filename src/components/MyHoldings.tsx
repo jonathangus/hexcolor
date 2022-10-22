@@ -10,6 +10,9 @@ const Rows = styled(motion.div)`
   justify-content: flex-end;
   grid-template-columns: repeat(3, 50px);
   margin-top: 12px;
+  position: absolute;
+  top: 100%;
+  right: 0;
 `;
 
 const Pointer = styled(motion.div)`

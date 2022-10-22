@@ -17,6 +17,7 @@ const Acc = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  position: relative;
 `;
 
 type Props = {};
