@@ -25,9 +25,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         >
           <Header />
           <ColorBg mounted={mounted}>
-            <Component {...pageProps} />
+            <Component {...pageProps} mounted={mounted} />
           </ColorBg>
-          <NewRegistrations />{' '}
+          <NewRegistrations />
         </ToastProvider>
       </QueryClientWrapper>
     </Web3Provider>

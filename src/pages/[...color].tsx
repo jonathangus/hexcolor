@@ -7,21 +7,33 @@ import useColorMatch from '../hooks/useColorMatch';
 import { stringIsHex } from '../utils/regex';
 
 type Props = {
-  isEmptyPage?: boolean;
+  mounted?: boolean;
   color?: string;
 };
 
-const ColorPage = ({ color }: Props) => {
+const ColorPage = ({ color, mounted }: Props) => {
   const { hex, wantedColor } = useColorMatch(color);
-
-  if (!stringIsHex(hex)) {
-    return null;
-  }
 
   return (
     <ColorContextProvider color={wantedColor}>
       <SEO title={`${hex} - ${color}.eth`} image={`/api/og?color=${color}`} />
       <ColorView />
+
+      {!mounted && process.env.NODE_ENV == 'production' && (
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+               const match = '#' + window.location.pathname.replace('/', '');
+               let hex;
+              if (match.match(/^#([A-F0-9]{3}|[A-F0-9]{6})$/i)) {
+                hex = match;
+                console.log("HEJ MATCH", hex, document.getElementById("color-title"))
+                document.getElementById("color-title").innerHTML = hex;
+              }
+             `,
+          }}
+        />
+      )}
     </ColorContextProvider>
   );
 };

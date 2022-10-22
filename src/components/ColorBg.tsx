@@ -22,7 +22,6 @@ type Props = { children: ReactNode; mounted: boolean };
 
 const ColorBg = ({ children, mounted }: Props) => {
   const { hex } = useColorMatch();
-  console.log({ mounted });
 
   const styles = hex
     ? `

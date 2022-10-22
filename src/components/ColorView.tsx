@@ -105,7 +105,7 @@ const ColorView = ({}: Props) => {
 
       <Inner>
         <Content>
-          <Title>{hex}</Title>
+          <Title id="color-title">{hex}</Title>
           {name && (
             <div>
               ✨✨✨ sweet! the name of this color is <i>{name}</i> and is one
