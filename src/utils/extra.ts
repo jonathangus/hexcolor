@@ -4,6 +4,10 @@ export const colorIsSpecial = (str: string): boolean =>
   colors.some((color) => color.hex === str);
 
 export const getName = (color: string): string | void => {
+  if (!color) {
+    return;
+  }
+
   const match = colors.find(
     (str) => str.hex.toLowerCase() === color.toLowerCase()
   );
