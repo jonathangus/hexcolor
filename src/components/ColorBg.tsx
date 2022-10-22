@@ -13,18 +13,15 @@ const Wrapper = styled.div`
   color: var(--text-color);
 `;
 
-type Props = { children: ReactNode };
+type Props = { children: ReactNode; mounted: boolean };
 
-const ColorBg = ({ children }: Props) => {
+const ColorBg = ({ children, mounted }: Props) => {
   const { hex } = useColorMatch();
+  console.log({ mounted });
 
-  return (
-    <>
-      {hex && (
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-              :root {
+  const styles = hex
+    ? `
+           :root {
                 --bg-color: ${hex};
                 --text-color: ${pickTextColorBasedOnBgColorAdvanced(
                   hex,
@@ -32,11 +29,30 @@ const ColorBg = ({ children }: Props) => {
                   '#000000'
                 )}
               }
-      `,
-          }}
-        />
-      )}
+  `
+    : '';
+  return (
+    <>
+      <>
+        {!mounted && (
+          <style
+            dangerouslySetInnerHTML={{
+              __html: styles,
+            }}
+          />
+        )}
+        {mounted && (
+          <style jsx global>
+            {`
+              ${styles}
 
+              body {
+                opacity: 1;
+              }
+            `}
+          </style>
+        )}
+      </>
       <Wrapper>{children}</Wrapper>
     </>
   );

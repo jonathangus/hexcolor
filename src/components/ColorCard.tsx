@@ -6,8 +6,8 @@ const Box = styled.div<{ size?: 'sm' | 'l' }>`
   ${(props) =>
     props.size === 'l' &&
     css`
-      width: 150px;
-      height: 150px;
+      width: 80px;
+      height: 80px;
     `}
 
   ${(props) =>

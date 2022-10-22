@@ -39,7 +39,8 @@ const Button = styled.a`
 `;
 
 const Random = ({}: Props) => {
-  const color = useMemo(() => randomColor(), []);
+  const router = useRouter();
+  const color = useMemo(() => randomColor(), [router.asPath]);
 
   return (
     <Link as={`/${color}`} href={color + '?color=' + color} shallow passHref>

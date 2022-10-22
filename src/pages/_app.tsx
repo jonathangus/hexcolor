@@ -7,8 +7,14 @@ import QueryClientWrapper from '../providers/QueryClientWrapper';
 import { useRouter } from 'next/router';
 import NewRegistrations from '../components/NewRegistrations';
 import { ToastProvider } from 'react-toast-notifications';
+import { useEffect, useState } from 'react';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   return (
     <Web3Provider>
       <QueryClientWrapper>
@@ -18,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           placement="bottom-right"
         >
           <Header />
-          <ColorBg>
+          <ColorBg mounted={mounted}>
             <Component {...pageProps} />
           </ColorBg>
           <NewRegistrations />{' '}
