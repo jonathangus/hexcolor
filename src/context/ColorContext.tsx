@@ -16,7 +16,7 @@ export const ColorContextProvider = ({
   color,
 }: PropsWithChildren<Props>) => {
   return (
-    <ColorContext.Provider value={{ color, hex: `#${color}` }}>
+    <ColorContext.Provider value={{ color, hex: color ? `#${color}` : '' }}>
       {children}
     </ColorContext.Provider>
   );
