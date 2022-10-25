@@ -15,6 +15,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  console.log({ pageProps });
   return (
     <Web3Provider>
       <QueryClientWrapper>
@@ -24,7 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           placement="bottom-right"
         >
           <Header />
-          <ColorBg mounted={mounted}>
+          <ColorBg mounted={mounted} color={(pageProps as any).color}>
             <Component {...pageProps} mounted={mounted} />
           </ColorBg>
           <NewRegistrations />

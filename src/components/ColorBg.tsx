@@ -18,10 +18,14 @@ const GlobalStyle = createGlobalStyle<{ hex: string }>`
       }
 `;
 
-type Props = { children: ReactNode; mounted: boolean };
+type Props = { children: ReactNode; mounted: boolean; color?: string };
 
-const ColorBg = ({ children, mounted }: Props) => {
-  const { hex } = useColorMatch();
+const ColorBg = ({ children, mounted, color }: Props) => {
+  let { hex } = useColorMatch();
+
+  if (color && !hex) {
+    hex = '#' + color;
+  }
 
   const styles = hex
     ? `
@@ -38,7 +42,14 @@ const ColorBg = ({ children, mounted }: Props) => {
   return (
     <>
       <>
-        <GlobalStyle hex={hex} />
+        {!mounted && (
+          <style
+            dangerouslySetInnerHTML={{
+              __html: styles,
+            }}
+          />
+        )}
+        {mounted && hex && <GlobalStyle hex={hex} />}
       </>
       <Wrapper>{children}</Wrapper>
     </>
