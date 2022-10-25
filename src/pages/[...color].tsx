@@ -9,38 +9,25 @@ import { stringIsHex } from '../utils/regex';
 type Props = {
   mounted?: boolean;
   color?: string;
+  isEmptyPage?: boolean;
 };
 
-const ColorPage = ({ color, mounted }: Props) => {
+const ColorPage = ({ color, isEmptyPage }: Props) => {
   const { hex, wantedColor } = useColorMatch(color);
+
+  if (isEmptyPage) {
+    return <Error statusCode={404} />;
+  }
 
   return (
     <ColorContextProvider color={wantedColor}>
       <SEO title={`${hex} - ${color}.eth`} image={`/api/og?color=${color}`} />
       <ColorView />
-
-      {!mounted && process.env.NODE_ENV == 'production' && (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-               const base = window.location.pathname.replace('/', '');
-               const match = '#' + base;
-               let hex;
-              if (match.match(/^#([A-F0-9]{3}|[A-F0-9]{6})$/i)) {
-                hex = match;
-                console.log("HEJ MATCH", hex, document.getElementById("color-title"))
-                document.getElementById("color-title").innerHTML = hex;
-                document.title = match + " - " + base + ".eth";
-              }
-             `,
-          }}
-        />
-      )}
     </ColorContextProvider>
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export async function getServerSideProps({ params }) {
   const [color] = params?.color || [];
   const hex = `#${color}`;
 
@@ -49,7 +36,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         isEmptyPage: true,
       },
-      revalidate: false,
     };
   }
 
@@ -57,15 +43,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       color,
     },
-    revalidate: false,
   };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: true,
-  };
-};
+}
 
 export default ColorPage;

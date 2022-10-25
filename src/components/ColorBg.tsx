@@ -38,14 +38,7 @@ const ColorBg = ({ children, mounted }: Props) => {
   return (
     <>
       <>
-        {!mounted && (
-          <style
-            dangerouslySetInnerHTML={{
-              __html: styles,
-            }}
-          />
-        )}
-        {mounted && hex && <GlobalStyle hex={hex} />}
+        <GlobalStyle hex={hex} />
       </>
       <Wrapper>{children}</Wrapper>
     </>
