@@ -16,7 +16,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     setMounted(true);
   }, []);
 
-  console.log({ pageProps });
   return (
     <Web3Provider>
       <QueryClientWrapper>

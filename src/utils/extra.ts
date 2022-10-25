@@ -1,29 +1,51 @@
-import colors from '../config/colors.json';
+import webColors from '../config/webcolors.json';
+import wikiColors from '../config/wikicolors.json';
+import xkcd from '../config/xkcd.json';
+
+const allColors = [
+  ...new Set(
+    [...webColors, ...wikiColors, ...xkcd].map((color) =>
+      color.hex.toUpperCase()
+    )
+  ),
+];
+
+const colors = allColors.map((color) => ({
+  hex: color,
+  color: color.replace('#', ''),
+  web: webColors.find((c) => c.hex.toUpperCase() === color),
+  xkcd: xkcd.find((c) => c.hex.toUpperCase() === color),
+  wiki: wikiColors.find((c) => c.hex.toUpperCase() === color),
+}));
 
 export const colorIsSpecial = (str: string): boolean =>
   colors.some((color) => color.hex === str);
 
-export const getName = (color: string): string | void => {
-  if (!color) {
-    return;
-  }
-
-  const match = colors.find(
-    (str) => str.hex.toLowerCase() === color.toLowerCase()
-  );
-
-  if (match) {
-    return match.name.replace(/([A-Z])/g, ' $1').trim();
-  }
+export const getColor = (str: string) => {
+  return colors.find((color) => color.hex.toLowerCase() === str.toLowerCase());
 };
 
-export const getTopNames = () => {};
+export const getName = (name: string): string | void => {
+  return name.replace(/([A-Z])/g, ' $1').trim();
+};
 
-export const randomColor = (): string => {
+const getRandomColorValue = () => {
+  return allColors[Math.floor(Math.random() * allColors.length)].replace(
+    '#',
+    ''
+  );
+};
+
+export const randomColor = (useRandom = true): string => {
+  if (Math.random() * 100 < 20 && useRandom) {
+    return getRandomColorValue();
+  }
+
   const newColour = ((Math.random() * 0xffffff) << 0).toString(16);
   if (newColour.length < 6) {
-    return randomColor();
+    return randomColor(false);
   }
+
   return newColour;
 };
 

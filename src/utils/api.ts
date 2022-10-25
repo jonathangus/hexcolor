@@ -1,6 +1,6 @@
 import { gql, GraphQLClient } from 'graphql-request';
 import { stringIsHex } from '../utils/regex';
-import colors from '../config/colors.json';
+// import colors from '../config/colors.json';
 
 const ensQuery = gql`
   query GetEns($name: String) {
@@ -97,15 +97,16 @@ const topQuery = gql`
 export const getTopNames = async (): Promise<
   { hex: string; available: boolean; rgb: string; name: string }[]
 > => {
-  const names = colors.map((c) => c.hex + '.eth');
-  const result = await client.request<any>(topQuery, {
-    names,
-  });
+  // const names = colors.map((c) => c.hex + '.eth');
+  // const result = await client.request<any>(topQuery, {
+  //   names,
+  // });
 
-  return colors.map((color) => ({
-    ...color,
-    available: !result.domains.some((domain) => domain.labelName === color.hex),
-  }));
+  // return colors.map((color) => ({
+  //   ...color,
+  //   available: !result.domains.some((domain) => domain.labelName === color.hex),
+  // }));
+  return [];
 };
 
 const registrationQuery = gql`

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Random from '../components/Random';
 import TopList from '../components/TopList';
 import Gradient from '../components/Gradient';
+import SEO from '../components/SEO';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -21,10 +22,13 @@ const Inner = styled.div`
 const Home: NextPage = () => {
   return (
     <Wrapper>
+      <SEO
+        title="hexcolor.club - a color club for ENS"
+        image="/og-image.jpeg"
+      />
       <Inner>
         <Random />
       </Inner>
-      <TopList />
       <Gradient />
     </Wrapper>
   );

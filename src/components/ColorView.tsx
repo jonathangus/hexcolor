@@ -8,6 +8,7 @@ import Random from './Random';
 import Upvote from './Upvote';
 import UserRelated from './UserRelated';
 import { motion } from 'framer-motion';
+import GroupMatch from './GroupMatch';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -46,7 +47,7 @@ const Title = styled.h1`
 
 const Info = styled(motion.div)`
   position: absolute;
-  bottom: -100%;
+  bottom: -150%;
   text-align: center;
   width: 100%;
   font-size: 18px;
@@ -82,19 +83,26 @@ const buttonVariants = {
   },
 };
 
+const Match = styled.div`
+  max-width: 700px;
+  margin: 0 auto;
+  margin-top: 24px;
+`;
+
 const Content = styled.div``;
 
 type Props = {};
 
 const ColorView = ({}: Props) => {
-  const { color, hex } = useColorContext();
-  const { data, error } = useEnsStats(color);
-  const name = getName(color);
+  const { color, hex, web, xkcd, wiki } = useColorContext();
+  const { data } = useEnsStats(color);
+
   const { data: ensName } = useEnsName({
     address: data?.owner ? ethers.utils.getAddress(data.owner) : '0x',
     enabled: Boolean(data?.owner),
     chainId: chain.mainnet.id,
   });
+
   return (
     <Wrapper>
       <div>
@@ -106,14 +114,6 @@ const ColorView = ({}: Props) => {
       <Inner>
         <Content>
           <Title id="color-title">{hex}</Title>
-          {name && (
-            <div>
-              ✨✨✨ sweet! the name of this color is <i>{name}</i> and is one
-              of the 145{' '}
-              <a href="https://www.colorabout.com/list/x11/">x11 colors</a>{' '}
-              ✨✨✨
-            </div>
-          )}
         </Content>
         <Info animate={data ? 'show' : 'hidden'} variants={infoVariants}>
           {data?.available && (
@@ -130,6 +130,12 @@ const ColorView = ({}: Props) => {
               {color}.eth is owned by: {ensName || data.ensName || data.owner}
             </div>
           )}
+
+          <Match>
+            {web && <GroupMatch {...web} type="web" />}
+            {xkcd && <GroupMatch {...xkcd} type="xkcd" />}
+            {wiki && <GroupMatch {...wiki} type="wiki" />}
+          </Match>
         </Info>
       </Inner>
 

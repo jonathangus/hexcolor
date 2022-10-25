@@ -4,7 +4,6 @@ import ColorView from '../components/ColorView';
 import SEO from '../components/SEO';
 import { ColorContextProvider } from '../context/ColorContext';
 import useColorMatch from '../hooks/useColorMatch';
-import { stringIsHex } from '../utils/regex';
 
 type Props = {
   mounted?: boolean;
