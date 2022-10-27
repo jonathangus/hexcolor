@@ -26,7 +26,7 @@ const ColorPage = ({ color, isEmptyPage }: Props) => {
   );
 };
 
-export async function getServerSideProps({ params }) {
+export async function getInitialProps({ params }) {
   const [color] = params?.color || [];
   const hex = `#${color}`;
 
