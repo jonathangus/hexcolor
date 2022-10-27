@@ -26,7 +26,7 @@ const ColorPage = ({ color, isEmptyPage }: Props) => {
   );
 };
 
-export async function getServerSideProps({ params }) {
+export async function getStaticProps({ params }) {
   const [color] = params?.color || [];
   const hex = `#${color}`;
 
@@ -44,5 +44,12 @@ export async function getServerSideProps({ params }) {
     },
   };
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};
 
 export default ColorPage;

@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
@@ -23,6 +24,7 @@ const Button = styled.a`
   outline: none;
   mix-blend-mode: screen;
   text-decoration: none;
+  transition: transform 0.5s ease;
 
   &:before {
     position: absolute;
@@ -35,6 +37,10 @@ const Button = styled.a`
     border-radius: 0.3em;
     content: '';
     mix-blend-mode: color-burn;
+  }
+
+  &:active {
+    transform: scale(0.9);
   }
 `;
 
