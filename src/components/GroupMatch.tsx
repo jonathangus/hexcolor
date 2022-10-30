@@ -1,6 +1,6 @@
 type Props = {
   name: string;
-  type: 'web' | 'xkcd' | 'wiki';
+  type: 'web' | 'xkcd' | 'wiki' | 'brand';
 };
 
 const GroupMatch = ({ name, type }: Props) => {
@@ -49,6 +49,22 @@ const GroupMatch = ({ name, type }: Props) => {
         is "{name}"
       </div>
     );
+  }
+
+  if (type === 'brand') {
+    let newName = name.replaceAll(/[0-9]/g, '');
+    if (newName.endsWith('-')) {
+      newName = newName.slice(0, -1);
+    }
+    return (
+      <div>
+        this color is part of the <b>{newName}</b> brand color scheme found in{' '}
+        <a href="https://brand-colors.re.im/" target="_blank" rel="noreferrer">
+          here
+        </a>
+      </div>
+    );
+    console.log('is brand', name);
   }
   return <div>{copy}</div>;
 };

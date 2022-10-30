@@ -1,10 +1,16 @@
 import webColors from '../config/webcolors.json';
 import wikiColors from '../config/wikicolors.json';
 import xkcd from '../config/xkcd.json';
+import brand from '../config/brand.json';
+
+const brandColors = Object.entries(brand).map(([name, hex]) => ({
+  hex,
+  name,
+}));
 
 const allColors = [
   ...new Set(
-    [...webColors, ...wikiColors, ...xkcd].map((color) =>
+    [...webColors, ...wikiColors, ...xkcd, ...brandColors].map((color) =>
       color.hex.toUpperCase()
     )
   ),
@@ -16,6 +22,7 @@ const colors = allColors.map((color) => ({
   web: webColors.find((c) => c.hex.toUpperCase() === color),
   xkcd: xkcd.find((c) => c.hex.toUpperCase() === color),
   wiki: wikiColors.find((c) => c.hex.toUpperCase() === color),
+  brand: brandColors.find((c) => c.hex.toUpperCase() === color),
 }));
 
 export const colorIsSpecial = (str: string): boolean =>
