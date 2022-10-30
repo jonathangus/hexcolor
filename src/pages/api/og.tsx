@@ -67,7 +67,7 @@ export default async function handler(req: NextRequest) {
       <div
         style={{
           display: 'flex',
-          fontSize: 40,
+          fontSize: 60,
           color: 'white',
           background: '#' + color,
           width: '100%',
