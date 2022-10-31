@@ -27,7 +27,7 @@ const Home: NextPage = () => {
         image="/og-image.jpeg"
       />
       <Inner>
-        <Random />
+        <Random force />
       </Inner>
       <Gradient />
     </Wrapper>

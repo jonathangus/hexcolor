@@ -8,7 +8,7 @@ const brandColors = Object.entries(brand).map(([name, hex]) => ({
   name,
 }));
 
-const allColors = [
+export const allColors = [
   ...new Set(
     [...webColors, ...wikiColors, ...xkcd, ...brandColors].map((color) =>
       color.hex.toUpperCase()
@@ -43,7 +43,11 @@ const getRandomColorValue = () => {
   );
 };
 
-export const randomColor = (useRandom = true): string => {
+export const randomColor = (useRandom = true, force = false): string => {
+  if (force) {
+    return getRandomColorValue();
+  }
+
   if (Math.random() * 100 < 20 && useRandom) {
     return getRandomColorValue();
   }

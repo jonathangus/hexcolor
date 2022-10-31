@@ -4,6 +4,7 @@ import ColorView from '../components/ColorView';
 import SEO from '../components/SEO';
 import { ColorContextProvider } from '../context/ColorContext';
 import useColorMatch from '../hooks/useColorMatch';
+import { allColors } from '../utils/extra';
 
 type Props = {
   mounted?: boolean;
@@ -45,9 +46,20 @@ export async function getStaticProps({ params }) {
   };
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = () => {
+  const paths = [];
+
+  for (let color of allColors) {
+    paths.push({
+      params: { color: [color.replace('#', '').toUpperCase()] },
+    });
+    // paths.push({
+    //   params: { color: [color.replace('#', '').toUpperCase()] },
+    // });
+  }
+
   return {
-    paths: [],
+    paths,
     fallback: 'blocking',
   };
 };

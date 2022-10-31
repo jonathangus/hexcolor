@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import styled from 'styled-components';
 import { randomColor } from '../utils/extra';
 
-type Props = {};
+type Props = { force?: boolean };
 
 const Button = styled.a`
   position: relative;
@@ -44,9 +44,9 @@ const Button = styled.a`
   }
 `;
 
-const Random = ({}: Props) => {
+const Random = ({ force }: Props) => {
   const router = useRouter();
-  const color = useMemo(() => randomColor(), [router.asPath]);
+  const color = useMemo(() => randomColor(true, force), [router.asPath, force]);
 
   return (
     <Link
