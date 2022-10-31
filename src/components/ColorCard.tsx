@@ -8,6 +8,11 @@ const Box = styled.div<{ size?: 'sm' | 'l' }>`
     css`
       width: 80px;
       height: 80px;
+
+      @media (max-width: 800px) {
+        width: 40px;
+        height: 40px;
+      }
     `}
 
   ${(props) =>

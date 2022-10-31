@@ -21,7 +21,11 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.div`
-  position: relative;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
 `;
 
 const MatosFooter = styled.div`
@@ -47,7 +51,7 @@ const Title = styled.h1`
 
 const Info = styled(motion.div)`
   position: absolute;
-  bottom: -150%;
+  padding-top: 20px;
   text-align: center;
   width: 100%;
   font-size: 18px;

@@ -12,16 +12,27 @@ const Rows = styled(motion.div)`
   position: relative;
   z-index: 100;
   max-width: 1800px;
-  margin: 0 auto;
   padding: 0 30px;
-  max-height: 320px;
+  max-height: 220px;
+  overflow: auto;
+  overflow: auto;
+  max-width: 70%;
+
+  @media (max-width: 800px) {
+    max-width: 100%;
+    max-height: 180px;
+  }
 `;
 
 const Pointer = styled(motion.div)`
-  position: absolute;
-  bottom: -100px;
-  width: 100%;
+  width: 70%;
   font-size: 22px;
+  padding-top: 20px;
+  text-align: center;
+  @media (max-width: 800px) {
+    font-size: 18px;
+    width: 100%;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -58,7 +69,7 @@ const UserRelated = ({ items }: Props) => {
         variants={{
           show: {
             transition: {
-              staggerChildren: 0.15,
+              staggerChildren: 0.12,
               delayChildren: 0.5,
               type: 'spring',
             },

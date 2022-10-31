@@ -13,6 +13,10 @@ const Rows = styled(motion.div)`
   position: absolute;
   top: 100%;
   right: 0;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 const Pointer = styled(motion.div)`

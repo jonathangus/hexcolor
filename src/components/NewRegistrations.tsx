@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 const NewRegistrations = () => {
   const { data = [], error } = useEnsRegistrations();
   const { addToast } = useToasts();
-
+  console.log(data);
   useEffect(() => {
     data.forEach((item) => {
       addToast(
@@ -36,6 +36,7 @@ const NewRegistrations = () => {
         };
     });
   }, [data.length]);
+
   if (!data) {
     return null;
   }
