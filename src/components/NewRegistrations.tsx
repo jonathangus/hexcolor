@@ -14,27 +14,32 @@ const Wrapper = styled.div`
 const NewRegistrations = () => {
   const { data = [], error } = useEnsRegistrations();
   const { addToast } = useToasts();
-  console.log(data);
+
   useEffect(() => {
-    data.forEach((item) => {
-      addToast(
-        <div>
-          <div>{item.name} just registred!</div>
-          <a
-            target="_blank"
-            href={`https://etherscan.io/tx/${item.txId}`}
-            rel="noreferrer"
-          >
-            see on etherscan
-          </a>
-          <div>(soon this will only filter on color ens)</div>
-        </div>
-      ),
-        {
-          appearance: 'info',
-          autoDismiss: true,
-        };
-    });
+    data
+      .filter((item) => {
+        return ('#' + item.name.replace('.eth', '')).match(
+          /^#([A-F0-9]{3}|[A-F0-9]{6})$/i
+        );
+      })
+      .forEach((item) => {
+        addToast(
+          <div>
+            <div>{item.name} just registred!</div>
+            <a
+              target="_blank"
+              href={`https://etherscan.io/tx/${item.txId}`}
+              rel="noreferrer"
+            >
+              see on etherscan
+            </a>
+          </div>
+        ),
+          {
+            appearance: 'info',
+            autoDismiss: true,
+          };
+      });
   }, [data.length]);
 
   if (!data) {

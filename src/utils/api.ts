@@ -149,12 +149,10 @@ export const getRegistrations = async (
     blockNr: number;
   }[]
 > => {
-  console.log({ blockNr });
   const result = await client.request<any>(registrationQuery, {
     blockNr,
   });
 
-  console.log({ result, blockNr });
   return result.registrationEvents
     .filter((event) => event.__typename === 'NameRegistered')
     .map((event) => ({
