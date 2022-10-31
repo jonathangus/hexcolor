@@ -16,7 +16,7 @@ export const allColors = [
   ),
 ];
 
-const colors = allColors.map((color) => ({
+export const colors = allColors.map((color) => ({
   hex: color,
   color: color.replace('#', ''),
   web: webColors.find((c) => c.hex.toUpperCase() === color),

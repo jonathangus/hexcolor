@@ -1,7 +1,8 @@
 import { gql, GraphQLClient } from 'graphql-request';
 import { stringIsHex } from '../utils/regex';
-// import colors from '../config/colors.json';
-
+import { colors } from './extra';
+import webColors from '../config/webcolors.json';
+import wikiColors from '../config/wikicolors.json';
 const ensQuery = gql`
   query GetEns($name: String) {
     domains(where: { name: $name, owner_contains: "0x" }) {
@@ -84,7 +85,7 @@ export const getUserHoldings = async (address: string): Promise<string[]> => {
 
 const topQuery = gql`
   query GetTop($names: [String]) {
-    domains(where: { name_in: $names, owner_contains: "0x" }) {
+    domains(where: { name_in: $names, owner_contains: "0x" }, first: 999) {
       labelName
       name
       owner {
@@ -95,18 +96,24 @@ const topQuery = gql`
 `;
 
 export const getTopNames = async (): Promise<
-  { hex: string; available: boolean; rgb: string; name: string }[]
+  { hex: string; available: boolean; name: string }[]
 > => {
-  // const names = colors.map((c) => c.hex + '.eth');
-  // const result = await client.request<any>(topQuery, {
-  //   names,
-  // });
+  const names = webColors.map(
+    (c) => c.hex.replace('#', '').toLowerCase() + '.eth'
+  );
+  const result = await client.request<any>(topQuery, {
+    names,
+  });
 
-  // return colors.map((color) => ({
-  //   ...color,
-  //   available: !result.domains.some((domain) => domain.labelName === color.hex),
-  // }));
-  return [];
+  console.log(names, result.domains);
+  return webColors.map((color) => ({
+    ...color,
+    available: !result.domains.some(
+      (domain) =>
+        domain.labelName.toLowerCase() ===
+        color.hex.replace('#', '').toLowerCase()
+    ),
+  }));
 };
 
 const registrationQuery = gql`

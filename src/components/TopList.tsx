@@ -9,6 +9,7 @@ const Wrapper = styled.div`
   bottom: 12px;
   left: 12px;
   z-index: 3;
+  background: white;
 `;
 const Item = styled.div`
   display: flex;
@@ -38,12 +39,16 @@ const TopList = () => {
       {data.map((domain) => (
         <Item key={domain.hex}>
           <Link
-            as={`/${domain.hex}`}
-            href={domain.hex + '?color=' + domain.hex}
+            as={`/${domain.hex.replace('#', '')}`}
+            href={
+              domain.hex.replace('#', '') +
+              '?color=' +
+              domain.hex.replace('#', '')
+            }
             shallow
           >
             <Item>
-              <Box style={{ backgroundColor: '#' + domain.hex }} />
+              <Box style={{ backgroundColor: domain.hex }} />
               {domain.name} - {domain.hex}.eth{' '}
               <Checker>{domain.available ? '✅' : '❌'}</Checker>
             </Item>

@@ -28,12 +28,7 @@ const ColorCard = ({ color, size = 'l' }: Props) => {
     <Link as={`/${color}`} href={color + '?color=' + color} shallow>
       <a>
         <Box style={{ background: hex }} size={size}>
-          {size == 'l' && (
-            <>
-              <div>{hex}</div>
-              {name && <div>✨✨✨ {name} ✨✨✨</div>}
-            </>
-          )}
+          {size == 'l' && <></>}
         </Box>
       </a>
     </Link>
