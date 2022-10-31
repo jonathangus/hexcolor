@@ -98,7 +98,7 @@ const Content = styled.div``;
 type Props = {};
 
 const ColorView = ({}: Props) => {
-  const { color, hex, web, xkcd, wiki, brand } = useColorContext();
+  const { color, hex, web, xkcd, wiki, brands } = useColorContext();
   const { data } = useEnsStats(color);
 
   const { data: ensName } = useEnsName({
@@ -139,7 +139,12 @@ const ColorView = ({}: Props) => {
             {web && <GroupMatch {...web} type="web" />}
             {xkcd && <GroupMatch {...xkcd} type="xkcd" />}
             {wiki && <GroupMatch {...wiki} type="wiki" />}
-            {brand && <GroupMatch {...brand} type="brand" />}
+            {brands?.length > 0 && (
+              <GroupMatch
+                names={brands.map((brand) => brand.name)}
+                type="brands"
+              />
+            )}
           </Match>
         </Info>
       </Inner>

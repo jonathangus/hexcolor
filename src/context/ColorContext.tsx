@@ -13,7 +13,7 @@ type IColorContext = {
   web?: ColorMatch;
   xkcd?: ColorMatch;
   wiki?: ColorMatch;
-  brand?: ColorMatch;
+  brands?: ColorMatch[];
 };
 
 type Props = {

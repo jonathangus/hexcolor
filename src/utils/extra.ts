@@ -1,12 +1,14 @@
 import webColors from '../config/webcolors.json';
 import wikiColors from '../config/wikicolors.json';
 import xkcd from '../config/xkcd.json';
-import brand from '../config/brand.json';
+import brands from '../config/brands.json';
 
-const brandColors = Object.entries(brand).map(([name, hex]) => ({
-  hex,
-  name,
-}));
+const brandColors = brands.flatMap((brand) =>
+  brand.colors.map((color) => ({
+    hex: `#${color}`,
+    name: brand.title,
+  }))
+);
 
 export const allColors = [
   ...new Set(
@@ -22,7 +24,7 @@ export const colors = allColors.map((color) => ({
   web: webColors.find((c) => c.hex.toUpperCase() === color),
   xkcd: xkcd.find((c) => c.hex.toUpperCase() === color),
   wiki: wikiColors.find((c) => c.hex.toUpperCase() === color),
-  brand: brandColors.find((c) => c.hex.toUpperCase() === color),
+  brands: brandColors.filter((c) => c.hex.toUpperCase() === color),
 }));
 
 export const colorIsSpecial = (str: string): boolean =>
