@@ -7,6 +7,11 @@ const Reference = styled.a`
   vertical-align: super;
 `;
 
+const Item = styled.div`
+  // display: flex;
+  // justify-content: center;
+`;
+
 type Props =
   | {
       name: string;
@@ -19,17 +24,20 @@ type Props =
 
 const GroupMatch = (props: Props) => {
   let copy = null;
-
+  let extraHref;
   if (props.type === 'web') {
-    copy = <div>{props.name}</div>;
+    copy = <span>{props.name}</span>;
+    extraHref = 'https://www.colorabout.com/list/css/';
   }
 
   if (props.type === 'xkcd') {
-    copy = <div>{props.name}</div>;
+    copy = <span>{props.name}</span>;
+    extraHref = 'https://xkcd.com/color/rgb/';
   }
 
   if (props.type === 'wiki') {
-    copy = <div>{props.name}</div>;
+    copy = <span>{props.name}</span>;
+    extraHref = 'https://en.wikipedia.org/wiki/List_of_colors_(compact)';
   }
 
   const removeNumbers = (str: string) => str.replaceAll(/[0-9]/g, '');
@@ -70,7 +78,16 @@ const GroupMatch = (props: Props) => {
       </div>
     );
   }
-  return <div>{copy}</div>;
+
+  return (
+    <Item>
+      {copy}
+
+      <Reference href={extraHref} target="_blank" rel="noreferrer">
+        [1]
+      </Reference>
+    </Item>
+  );
 };
 
 export default GroupMatch;
