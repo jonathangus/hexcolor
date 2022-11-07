@@ -5,23 +5,9 @@ import ColorCard from './ColorCard';
 
 const Rows = styled(motion.div)`
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-  z-index: 100;
-  max-width: 1800px;
-  padding: 0 30px;
-  max-height: 220px;
-  overflow: auto;
-  overflow: auto;
-  max-width: 70%;
-
-  @media (max-width: 800px) {
-    max-width: 100%;
-    max-height: 180px;
-  }
+  flex-direction: row;
+  overflow-y: visible;
+  height: 48px;
 `;
 
 const Pointer = styled(motion.div)`
@@ -29,6 +15,7 @@ const Pointer = styled(motion.div)`
   font-size: 22px;
   padding-top: 20px;
   text-align: center;
+
   @media (max-width: 800px) {
     font-size: 18px;
     width: 100%;
@@ -82,7 +69,7 @@ const UserRelated = ({ items }: Props) => {
           </motion.div>
         ))}
       </Rows>
-      {completed && (
+      {/* {completed && (
         <Pointer>
           Same user also owns these badboys
           <Hand
@@ -92,7 +79,7 @@ const UserRelated = ({ items }: Props) => {
             👆
           </Hand>
         </Pointer>
-      )}
+      )} */}
     </Wrapper>
   );
 };
