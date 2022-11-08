@@ -22,7 +22,7 @@ const ColorPage = ({ color, isEmptyPage }: Props) => {
   return (
     <ColorContextProvider color={wantedColor}>
       <SEO
-        title={`${hex} - ${wantedColor}.eth`}
+        title={`${hex.toUpperCase()} - ${wantedColor.toUpperCase()}.eth`}
         image={`/api/og?color=${color}`}
       />
       <ColorView />

@@ -2,7 +2,10 @@ import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
 import { getEns } from '../../utils/api';
 import axios from 'axios';
-import { pickTextColorBasedOnBgColorAdvanced } from '../../utils/extra';
+import {
+  getColor,
+  pickTextColorBasedOnBgColorAdvanced,
+} from '../../utils/extra';
 
 export const config = {
   runtime: 'experimental-edge',
@@ -64,6 +67,10 @@ export default async function handler(req: NextRequest) {
   //     return new Response('Invalid token.', { status: 401 });
   //   }
 
+  const match = getColor(`#${color}`) || {};
+
+  console.log('match?:', match);
+
   return new ImageResponse(
     (
       <div
@@ -78,6 +85,7 @@ export default async function handler(req: NextRequest) {
           textAlign: 'center',
           justifyContent: 'center',
           alignItems: 'center',
+          flexDirection: 'column',
           fontFamily: '"MonoFont"',
           color: pickTextColorBasedOnBgColorAdvanced(
             '#' + color,
@@ -86,24 +94,27 @@ export default async function handler(req: NextRequest) {
           ),
         }}
       >
-        <>
-          {result.available && <h1>{color.toUpperCase()}.eth is available!</h1>}
-          {!result.available && (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <div style={{ display: 'flex' }}>{color}.eth</div>
-              <span style={{ display: 'flex', flexDirection: 'column' }}>
-                is owned by {ensName || result.owner}!
-              </span>
-            </div>
-          )}
-        </>
+        {result.available && <h1>{color.toUpperCase()}.eth is available!</h1>}
+        {!result.available && (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <div style={{ display: 'flex' }}>{color}.eth</div>
+            <span style={{ display: 'flex', flexDirection: 'column' }}>
+              is owned by {ensName || result.owner}!
+            </span>
+          </div>
+        )}
+        {match?.name ? (
+          <div style={{ display: 'flex', fontSize: '22', marginTop: 20 }}>
+            this color is also known as "{match.name}"
+          </div>
+        ) : null}
       </div>
     ),
     {

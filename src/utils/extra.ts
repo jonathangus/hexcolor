@@ -30,8 +30,16 @@ export const colors = allColors.map((color) => ({
 export const colorIsSpecial = (str: string): boolean =>
   colors.some((color) => color.hex === str);
 
-export const getColor = (str: string) => {
-  return colors.find((color) => color.hex.toLowerCase() === str.toLowerCase());
+export const getColor = (str: string): any => {
+  const match = colors.find(
+    (color) => color.hex.toLowerCase() === str.toLowerCase()
+  );
+  if (match) {
+    return {
+      ...match,
+      name: match.web?.name || match.xkcd?.name || match.wiki?.name,
+    };
+  }
 };
 
 export const getName = (name: string): string | void => {
