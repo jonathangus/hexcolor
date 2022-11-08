@@ -24,7 +24,7 @@ function toHex(arrayBuffer: ArrayBuffer) {
 
 // Make sure the font exists in the specified path:
 const font = fetch(
-  new URL('../../assets/SFMonoBold.TTF', import.meta.url)
+  new URL('../../assets/SFMonoBold.ttf', import.meta.url)
 ).then((res) => res.arrayBuffer());
 
 export default async function handler(req: NextRequest) {
