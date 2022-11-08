@@ -18,11 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Web3Provider>
       <QueryClientWrapper>
-        <ToastProvider
-          autoDismiss
-          autoDismissTimeout={6000}
-          placement="bottom-right"
-        >
+        <ToastProvider placement="bottom-right">
           <Header />
           <ColorBg mounted={mounted} color={(pageProps as any).color}>
             <Component {...pageProps} mounted={mounted} />

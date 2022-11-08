@@ -1,13 +1,28 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+const Wrapper = styled(motion.div)`
+  svg {
+    width: 100px;
+    height: auto;
 
-const Wrapper = styled.div``;
+    path {
+      stroke: var(--text-color);
+      transition: all 1s ease;
+    }
+  }
+`;
 
 type Props = {};
 
 const MatosLogo = ({}: Props) => {
   return (
-    <>
-      <svg
+    <Wrapper
+      whileHover={{
+        scale: 1.25,
+        transition: { duration: 1 },
+      }}
+    >
+      <motion.svg
         width="536"
         height="127"
         viewBox="0 0 536 127"
@@ -104,8 +119,8 @@ const MatosLogo = ({}: Props) => {
           stroke="white"
           stroke-width="21.0987"
         />
-      </svg>
-    </>
+      </motion.svg>
+    </Wrapper>
   );
 };
 

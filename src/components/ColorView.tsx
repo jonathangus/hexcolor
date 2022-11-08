@@ -10,7 +10,7 @@ import UserRelated from './UserRelated';
 import { motion } from 'framer-motion';
 import GroupMatch from './GroupMatch';
 import StructuredCard from './StructuredCard';
-import MatosLogo from '../../public/matos.svg';
+import MatosLogo from './MatosLogo';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -32,29 +32,44 @@ const Inner = styled.div`
 
 const MatosFooter = styled.div`
   position: fixed;
-  bottom: 12px;
-  left: 12px;
+  bottom: 24px;
+  left: 16px;
   color: var(--text-color);
   transition: color 1s ease;
+  display: flex;
+  font-weight: 500;
+  align-items: flex-end;
+
+  span {
+    margin-left: 4px;
+    margin-right: 8px;
+  }
 `;
 
 const UpvoteWrap = styled.div`
   position: fixed;
-  bottom: 12px;
-  right: 12px;
+  bottom: 24px;
+  right: 16px;
   color: var(--text-color);
   transition: color 1s ease;
 `;
 
 const Title = styled(motion.h1)`
-  font-size: 4rem;
+  font-size: 6rem;
   text-transform: uppercase;
+  font-family: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
+    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
+    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+
+  @media (max-width: 800px) {
+    font-size: 4rem;
+  }
 `;
 
 const Info = styled(motion.div)`
   position: absolute;
   text-align: center;
-  bottom: 48px;
+  bottom: 118px;
   width: 100%;
   font-size: 18px;
   display: flex;
@@ -79,7 +94,13 @@ const titleVariants = {
 };
 
 const Content = styled.div``;
+const TwitterLink = styled.a`
+  text-decoration: none;
 
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 type Props = {};
 
 const ColorView = ({}: Props) => {
@@ -142,7 +163,15 @@ const ColorView = ({}: Props) => {
         <Upvote color={color} />
       </UpvoteWrap>
 
-      <MatosFooter>{/* <MatosLogo /> */}</MatosFooter>
+      <MatosFooter>
+        <TwitterLink target="_blank" href="https://twitter.com/hexcolor_club">
+          @hexcolor_club
+        </TwitterLink>
+        <span>by</span>
+        <a target="_blank" href="https://matos.club/" rel="noreferrer">
+          <MatosLogo />
+        </a>
+      </MatosFooter>
     </Wrapper>
   );
 };

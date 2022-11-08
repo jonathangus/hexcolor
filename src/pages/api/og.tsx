@@ -2,6 +2,7 @@ import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
 import { getEns } from '../../utils/api';
 import axios from 'axios';
+import { pickTextColorBasedOnBgColorAdvanced } from '../../utils/extra';
 
 export const config = {
   runtime: 'experimental-edge',
@@ -21,19 +22,20 @@ function toHex(arrayBuffer: ArrayBuffer) {
     .join('');
 }
 
+// Make sure the font exists in the specified path:
+const font = fetch(
+  new URL('../../assets/SFMonoBold.TTF', import.meta.url)
+).then((res) => res.arrayBuffer());
+
 export default async function handler(req: NextRequest) {
   const { searchParams } = req.nextUrl;
   const color = searchParams.get('color');
   const result = await getEns(color);
   let ensName;
+  const fontData = await font;
+
   if (result?.owner) {
     try {
-      console.log(
-        result.owner,
-        'get moralis',
-        `https://deep-index.moralis.io/api/v2/resolve/${result.owner}/reverse`,
-        process.env.MORALIS
-      );
       let res = await fetch(
         `https://deep-index.moralis.io/api/v2/resolve/${result.owner}/reverse`,
         {
@@ -67,8 +69,8 @@ export default async function handler(req: NextRequest) {
       <div
         style={{
           display: 'flex',
-          fontSize: 60,
-          color: 'white',
+          fontSize: 95,
+          lineHeight: '140%',
           background: '#' + color,
           width: '100%',
           height: '100%',
@@ -76,19 +78,44 @@ export default async function handler(req: NextRequest) {
           textAlign: 'center',
           justifyContent: 'center',
           alignItems: 'center',
+          fontFamily: '"MonoFont"',
+          color: pickTextColorBasedOnBgColorAdvanced(
+            '#' + color,
+            '#ffffff',
+            '#000000'
+          ),
         }}
       >
-        {result.available && <h1>{color}.eth is available!</h1>}
-        {!result.available && (
-          <h1>
-            {color}.eth is owned by {ensName || result.owner}!
-          </h1>
-        )}
+        <>
+          {result.available && <h1>{color}.eth is available!</h1>}
+          {!result.available && (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <div style={{ display: 'flex' }}>{color}.eth</div>
+              <span style={{ display: 'flex', flexDirection: 'column' }}>
+                is owned by {ensName || result.owner}!
+              </span>
+            </div>
+          )}
+        </>
       </div>
     ),
     {
       width: 1200,
       height: 630,
+      fonts: [
+        {
+          name: 'MonoFont',
+          data: fontData,
+          style: 'normal',
+        },
+      ],
     }
   );
 }
