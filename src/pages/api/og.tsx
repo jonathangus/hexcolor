@@ -69,8 +69,6 @@ export default async function handler(req: NextRequest) {
 
   const match = getColor(`#${color}`) || {};
 
-  console.log('match?:', match);
-
   return new ImageResponse(
     (
       <div
@@ -111,7 +109,7 @@ export default async function handler(req: NextRequest) {
           </div>
         )}
         {match?.name ? (
-          <div style={{ display: 'flex', fontSize: '22', marginTop: 20 }}>
+          <div style={{ display: 'flex', fontSize: 22, marginTop: 20 }}>
             this color is also known as "{match.name}"
           </div>
         ) : null}
