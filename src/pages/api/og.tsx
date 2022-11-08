@@ -87,7 +87,7 @@ export default async function handler(req: NextRequest) {
         }}
       >
         <>
-          {result.available && <h1>{color}.eth is available!</h1>}
+          {result.available && <h1>{color.toUpperCase()}.eth is available!</h1>}
           {!result.available && (
             <div
               style={{
