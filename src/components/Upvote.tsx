@@ -2,7 +2,19 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { SiweMessage } from 'siwe';
 import { useAccount, useSigner } from 'wagmi';
 import axios from 'axios';
+import styled from 'styled-components';
 
+const Wrapper = styled.div`
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 14px;
+  text-transform: uppercase;
+  transition: all 0.5s ease;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
 type Props = { color: string };
 
 const Upvote = ({ color }: Props) => {
@@ -15,19 +27,21 @@ const Upvote = ({ color }: Props) => {
   });
 
   const { mutateAsync, isLoading } = useMutation(async () => {
-    const message = await createSiweMessage(
-      address,
-      `I love the beautiful color #${color}`
-    );
+    try {
+      const message = await createSiweMessage(
+        address,
+        `I love the beautiful color #${color}`
+      );
 
-    const signature = await signer.signMessage(message);
-    const { data } = await axios.post('/api/count', {
-      message,
-      signature,
-      color,
-    });
+      const signature = await signer.signMessage(message);
+      const { data } = await axios.post('/api/count', {
+        message,
+        signature,
+        color,
+      });
 
-    queryClient.setQueryData(['count', color], data.count);
+      queryClient.setQueryData(['count', color], data.count);
+    } catch (e) {}
   });
 
   async function createSiweMessage(address, statement) {
@@ -49,9 +63,12 @@ const Upvote = ({ color }: Props) => {
   }
 
   return (
-    <div onClick={() => mutateAsync()}>
+    <Wrapper
+      title="Liking this color? Try to upvote it"
+      onClick={() => mutateAsync()}
+    >
       {colorCount || 0} {'upvotes ❤️'}
-    </div>
+    </Wrapper>
   );
 };
 

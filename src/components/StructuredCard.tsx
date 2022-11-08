@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 import CardValue from './CardValue';
 import Random from './Random';
@@ -55,7 +55,7 @@ const ButtonWrapper = styled.div`
   gap: 8px;
 `;
 
-const RegisterButton = styled.a`
+const RegisterButton = styled.a<{ disabled: boolean }>`
   box-sizing: border-box;
   font-weight: 500;
   padding: 8px;
@@ -72,9 +72,22 @@ const RegisterButton = styled.a`
   display: flex;
   justify-content: center;
   align-items: center;
-
+  transition: all 0.4s ease;
   &:hover {
-    background: #001EBA;
+    background: #001eba;
+  }
+
+  ${(p) =>
+    p.disabled
+      ? css`
+          opacity: 0.5;
+          cursor: auto;
+
+          &:hover {
+            background: #0029ff;
+          }
+        `
+      : ''}
 `;
 
 type Props = {
@@ -114,6 +127,7 @@ const StructuredCard = ({
 
       <ButtonWrapper>
         <RegisterButton
+          disabled={Boolean(owner)}
           href={registerUrl}
         >{`Register ${color.toUpperCase()}.eth`}</RegisterButton>
         <Random />
