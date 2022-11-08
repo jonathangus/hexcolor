@@ -102,7 +102,7 @@ export default async function handler(req: NextRequest) {
               justifyContent: 'center',
             }}
           >
-            <div style={{ display: 'flex' }}>{color}.eth</div>
+            <div style={{ display: 'flex' }}>{color.toUpperCase()}.eth</div>
             <span style={{ display: 'flex', flexDirection: 'column' }}>
               is owned by {ensName || result.owner}!
             </span>
