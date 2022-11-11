@@ -16,7 +16,11 @@ const NewRegistrations = () => {
   const { addToast } = useToasts();
 
   useEffect(() => {
-    data
+    const arrayUniqueByKey = [
+      ...new Map(data.map((item) => [item.name, item])).values(),
+    ];
+
+    arrayUniqueByKey
       .filter((item) => {
         return ('#' + item.name.replace('.eth', '')).match(
           /^#([A-F0-9]{3}|[A-F0-9]{6})$/i

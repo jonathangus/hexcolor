@@ -7,7 +7,7 @@ const useEnsRegistrations = () => {
   const [lastBlock, setLastBlock] = useState<number>();
   useBlockNumber({
     onBlock: (_lastBlock) => {
-      setLastBlock(_lastBlock);
+      setLastBlock(_lastBlock - 20);
     },
     watch: false,
   });
